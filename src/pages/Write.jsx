@@ -41,6 +41,7 @@ export default Write;
 
 
 const StWritePagelWrap = styled.div`
+width: 69%;
     display:flex;
     flex-direction : column;
     justify-content: center;
@@ -67,7 +68,7 @@ const StWritePage = styled.div`
 
 const StWriteContainer = styled.div`
     text-align : center;
-    color: white;
+    color: #c4c3ca;
     display:flex;
     flex-direction : column;
     align-items :center;

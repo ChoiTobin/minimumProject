@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from "react-router-dom";
-import { IoMdHome, IoLogoGithub } from "react-icons/io";
+import { IoLogoGithub } from "react-icons/io";
 
 const Footer = () => {
   return (
