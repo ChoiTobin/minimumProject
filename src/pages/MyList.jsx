@@ -73,6 +73,7 @@ export default MyList;
 
 
 const StListPagelWrap = styled.div`
+width:69%;
     display:flex;
     flex-direction : column;
     justify-content: center;
@@ -87,7 +88,7 @@ const StListPagelWrap = styled.div`
 const StListPage = styled.div`
     text-align : center;
     color: white;
-    width : 80%;
+    width : 100%;
     height : 50px;
     line-height : 1.6;
     font-weight : 1000;
@@ -101,7 +102,7 @@ const StListContainer = styled.div`
     flex-direction : row;
     flex-wrap : wrap;
     text-align : center;        
-    width : 80%;
+    width : 100%;
     min-height : 400px;
     background-color: #2a2b38;
     border-radius : 1rem;

@@ -34,6 +34,7 @@ const Detail = () => {
 export default Detail;
 
 const StDetailPagelWrap = styled.div`
+width:69%;
     display:flex;
     flex-direction : column;
     justify-content: center;
