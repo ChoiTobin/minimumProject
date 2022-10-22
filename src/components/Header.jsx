@@ -1,16 +1,68 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { IoMdHome } from "react-icons/io";
 
-const Header = () => {
+function Header() {
+    const navigate = useNavigate();
+
     return (
-        <StHeaderContainer>
-
-        </StHeaderContainer>
+        <HeadContainer>
+            <StHomeBtn onClick={() => { navigate("/") }}>
+                <IoMdHome className="head-ico" />
+                <div>Find game friends</div>
+            </StHomeBtn>
+            <StNavWrap>
+                <StNavItem></StNavItem>
+                <StNavItem></StNavItem>
+                <StNavItem></StNavItem>
+            </StNavWrap>
+        </HeadContainer>
     );
-};
-
+}
 export default Header;
 
-const StHeaderContainer = styled.div`
-    background-color: blue;
+const HeadContainer = styled.section`
+  display: flex;
+  flex-direction : row;
+  justify-content: space-around;
+  width: 100%;
+  height: 40px;
+  background-color: #2c5cc5;
+  color: #fff;
+  position:sticky;
+  top : 0;
+  box-shadow: 0px 2px 10px #9dabca;
+`
+const StHomeBtn = styled.a`
+    width: 148px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: white;
+.head-ico {
+font-size: 1.6rem;
+margin: 5px;
+color: white;
+height: 40px;
+}
+&:hover {
+color: white;
+}
+`
+
+const StNavWrap = styled.div`
+    display: flex;
+    flex-direction : row;
+    justify-content: end;
+    width: 80%;
+    gap : 10px;
+`
+
+const StNavItem = styled.div`
+    width: 30px;
+    background-color : orange;
 `

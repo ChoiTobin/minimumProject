@@ -9,8 +9,9 @@ const Layout = (props) => {
             <StLayoutDiv>
                 <Header />
                 {props.children}
+                <Footer />
             </StLayoutDiv>
-            <Footer />
+
         </>
     );
 };
@@ -18,6 +19,6 @@ const Layout = (props) => {
 export default Layout;
 
 const StLayoutDiv = styled.div`    
-    display: grid;  
-    grid-template-rows: 80px auto;
+    display:flex;
+    flex-direction : column;
 `;
