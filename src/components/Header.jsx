@@ -13,9 +13,8 @@ function Header() {
                 <div>Find game friends</div>
             </StHomeBtn>
             <StNavWrap>
-                <StNavItem></StNavItem>
-                <StNavItem></StNavItem>
-                <StNavItem></StNavItem>
+                <StNavItem>My List</StNavItem>
+                <StNavItem>Writing</StNavItem>
             </StNavWrap>
         </HeadContainer>
     );
@@ -33,6 +32,7 @@ const HeadContainer = styled.section`
   position:sticky;
   top : 0;
   box-shadow: 0px 2px 10px #9dabca;
+  z-index: 1;
 `
 const StHomeBtn = styled.a`
     width: 148px;
@@ -58,11 +58,21 @@ const StNavWrap = styled.div`
     display: flex;
     flex-direction : row;
     justify-content: end;
+    align-items : center;
     width: 80%;
     gap : 10px;
 `
 
-const StNavItem = styled.div`
-    width: 30px;
-    background-color : orange;
+const StNavItem = styled.button`
+    background-color : white;
+    width : 100px;
+    height: 80%;
+    border-radius : 8px;
+    border : none;//#fff solid 1px;
+    background-color: #2c5cc5;
+    color: #fff;
+    &:hover{
+        background-color: #fff;
+        color: #2c5cc5;
+    }
 `

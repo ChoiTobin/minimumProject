@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import Layout from '../components/Layout';
-import './Login.css'
+import './action.css'
 
 const Login = () => {
     return (
@@ -71,8 +71,8 @@ const StSubmitBtn = styled.a`
     color: #c4c3ca;
     background-color : #1f2029;
     &:hover {
-        background-color : #ffeba7;
-        color:#102770;
+        background-color : #c4c3ca;
+        color: #1f2029;
         box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
     }
 `
