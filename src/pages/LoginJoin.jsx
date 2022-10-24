@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import Layout from '../components/Layout';
@@ -5,8 +6,13 @@ import './action.css'
 import useInput from '../hooks/useInput';
 import { useDispatch, useSelector } from "react-redux";
 import { __insertMember, __userIdCheck } from '../redux/modules/members';
+import { __userLogin } from "../redux/modules/members";
+
+
+
 
 const Login = () => {
+ //현홍님 시작
     const { isInsert, error, isIdCheck } = useSelector(state => state.members)
     const dispatch = useDispatch();
     const [join, setJoin, joinHandle] = useInput({
@@ -48,8 +54,50 @@ const Login = () => {
             }
         }
     }, [dispatch, isInsert])
+    
+    
+    //토빈님 시작
 
 
+
+const check = useSelector((state) => state);
+const dispatch = useDispatch();
+
+//useEffect로 get요청을 해서 url 데이터를 가지고 오고
+//
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+
+//키보드 입력시 값들은 잘들어온다.
+
+
+//왔다갔다
+
+
+
+const onEmailHandler = (event) => {
+    const emailCurrent = event.target.value;
+    setEmail(emailCurrent);
+    
+};
+const onPasswordHandler = (event) => {
+    const passwordCurrent = event.target.value;
+    setPassword(passwordCurrent);
+};
+
+const onLoginHandler = () => {
+    dispatch(__userLogin({ 
+        userid:email,  
+        pw:password 
+        
+    }));
+};
+
+const onKeyUp = (e) => {
+    if (e.key === "Enter") {
+    onLoginHandler();
+    }
+};
 
     return (
         <Layout>
@@ -64,14 +112,14 @@ const Login = () => {
                                 <div className="section text-center">
                                     <h4 className="mb-4 pb-3">Log In</h4>
                                     <div className="form-group">
-                                        <input type="email" name="logemail" className="form-style" placeholder="Your Email" id="logemail" autocomplete="off" />
+                                        <input type="email" name="id" value={email} onChange={onEmailHandler} className="form-style" placeholder="Your Email" id="logemail" autocomplete="off" />
                                         <i className="input-icon uil uil-at"></i>
                                     </div>
                                     <div className="form-group mt-2">
-                                        <input type="password" name="logpass" className="form-style" placeholder="Your Password" id="logpass" autocomplete="off" />
+                                        <input type="password" name="ow" value={password} onChange={onPasswordHandler} onKeyUp={onKeyUp} className="form-style" placeholder="Your Password" id="logpass" autocomplete="off" />
                                         <i className="input-icon uil uil-lock-alt"></i>
                                     </div>
-                                    <StSubmitBtn href="#" className="btn mt-4">Login</StSubmitBtn>
+                                    <StSubmitBtn onClick={onLoginHandler} href="#" className="btn mt-4">Login</StSubmitBtn>
                                 </div>
                             </div>
                         </div>

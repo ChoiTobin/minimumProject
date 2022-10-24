@@ -4,6 +4,10 @@ import Layout from '../components/Layout';
 
 const List = () => {
     return (
+        /*
+        오늘 끝낼것. 
+        API잘읽어보기   
+        */
         <Layout>
             <StListPagelWrap>
                 <StListPage>모집중</StListPage>

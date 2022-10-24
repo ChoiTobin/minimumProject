@@ -7,12 +7,17 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import store from "./redux/config/configStore";
 import { Provider } from "react-redux";
+import { CookiesProvider } from 'react-cookie';
+//추가
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
+  <CookiesProvider>
+      <Provider store={store}>
     <App />
   </Provider>
+  </CookiesProvider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
