@@ -12,18 +12,18 @@ const Write = () => {
                         <StWriteTitle>
                             <div className="form-floating mb-3">
                                 <input type="text" className="form-control" id="floatingInput" placeholder="game title" />
-                                <label for="floatingInput">게임 이름</label>
+                                <label htmlFor="floatingInput">게임 이름</label>
                             </div>
                         </StWriteTitle>
                         <StWriteBody />
                         <StWriteGameId >
                             <div className="form-floating mb-3">
                                 <input type="text" className="form-control text-center" id="floatingInput" placeholder="game id" />
-                                <label className='text-center' for="floatingInput">게임 아이디</label>
+                                <label className='text-center' htmlFor="floatingInput">게임 아이디</label>
                             </div>
                             <div className="form-floating mb-3">
                                 <input type="number" className="form-control text-center" id="floatingInput" placeholder="person number" />
-                                <label className='text-center' for="floatingInput">모집 인원수</label>
+                                <label className='text-center' htmlFor="floatingInput">모집 인원수</label>
                             </div>
                         </StWriteGameId>
                     </StWriteWrap>

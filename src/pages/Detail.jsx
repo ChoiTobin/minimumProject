@@ -17,7 +17,7 @@ const Detail = () => {
                         <StDetailGameId >
                             <div className="form-floating mb-3">
                                 <input type="text" className="form-control text-center" id="floatingInput" placeholder="game id" />
-                                <label className='text-center' for="floatingInput">게임 아이디</label>
+                                <label className='text-center' htmlFor="floatingInput">게임 아이디</label>
                             </div>
                         </StDetailGameId>
                     </StDetailWrap>
