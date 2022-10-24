@@ -1,6 +1,19 @@
 {
   "members": [
-      
+    {
+      "id": "qwe",
+      "pw": "123",
+      "name": "qas"
+    },
+    {
+      "id": "qwe1",
+      "pw": "123",
+      "name": "asd"
+    },
+    {
+      "id": "asd",
+      "pw": "123",
+      "name": "zxc"
+    }
   ]
-
 }
