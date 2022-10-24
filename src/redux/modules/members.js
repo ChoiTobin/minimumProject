@@ -44,7 +44,7 @@ export const __userLogin = createAsyncThunk(
     "members/Login",
     async (payload, thunkAPI) => {
         try {
-            const data = await axios.post(
+            await axios.post(
                 `${process.env.REACT_APP_API_URL}/api/member/login`,
                 {
                     userid: payload.userid,
@@ -64,12 +64,14 @@ export const __userLogin = createAsyncThunk(
                 } else if (response.data.error.code == 'WRONG_PASSWORD') {
                     alert('비밀번호가 틀렸습니다.')
                 }
+                return thunkAPI.fulfillWithValue(response.data);
             }
             );
-            return thunkAPI.fulfillWithValue(data);
+
             //리턴을 제대로해줘야한다. 그래야 reducer로 들어가는데 값이 안들어감.
             //post라 그런가?
         } catch (error) {
+
             return thunkAPI.rejectWithValue(error);
         }
     }

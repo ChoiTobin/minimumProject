@@ -10,7 +10,7 @@ const MyList = () => {
                 <StListContainer>
                     <StCard className="card" >
                         <div className='cardWrap'>
-                            <img src="https://www.leagueoflegends.co.kr/upload/EditorImages/20141111115353_5XNsfyM6.png" class="card-img-top" alt="..." />
+                            <img src="https://www.leagueoflegends.co.kr/upload/EditorImages/20141111115353_5XNsfyM6.png" className="card-img-top" alt="..." />
                             <StWriteBtn className="btn mt-4">참가 신청</StWriteBtn>
                         </div>
                         <div className="card-body cardWrap">
@@ -21,7 +21,7 @@ const MyList = () => {
                     </StCard>
                     <StCard className="card" >
                         <div className='cardWrap'>
-                            <img src="http://cdn.bizwatch.co.kr/news/photo/2018/04/12/00ed4bd7af9121117d2b3a70ac47f6e7122206.jpg" class="card-img-top" alt="..." />
+                            <img src="http://cdn.bizwatch.co.kr/news/photo/2018/04/12/00ed4bd7af9121117d2b3a70ac47f6e7122206.jpg" className="card-img-top" alt="..." />
                             <StWriteBtn className="btn mt-4">참가 신청</StWriteBtn>
                         </div>
                         <div className="card-body cardWrap">
@@ -32,7 +32,7 @@ const MyList = () => {
                     </StCard>
                     <StCard className="card" >
                         <div className='cardWrap'>
-                            <img src="https://file.mk.co.kr/meet/neds/2015/04/image_readtop_2015_379113_14295840311884987.jpg" class="card-img-top" alt="..." />
+                            <img src="https://file.mk.co.kr/meet/neds/2015/04/image_readtop_2015_379113_14295840311884987.jpg" className="card-img-top" alt="..." />
                             <StWriteBtn className="btn mt-4">참가 신청</StWriteBtn>
                         </div>
                         <div className="card-body cardWrap">
@@ -43,7 +43,7 @@ const MyList = () => {
                     </StCard>
                     <StCard className="card" >
                         <div className='cardWrap'>
-                            <img src="https://file.mk.co.kr/meet/neds/2015/04/image_readtop_2015_379113_14295840311884987.jpg" class="card-img-top" alt="..." />
+                            <img src="https://file.mk.co.kr/meet/neds/2015/04/image_readtop_2015_379113_14295840311884987.jpg" className="card-img-top" alt="..." />
                             <StWriteBtn className="btn mt-4">참가 신청</StWriteBtn>
                         </div>
                         <div className="card-body cardWrap">
@@ -54,7 +54,7 @@ const MyList = () => {
                     </StCard>
                     <StCard className="card" >
                         <div className='cardWrap'>
-                            <img src="https://img.hankyung.com/photo/202106/61241_201145_2219.jpg" class="card-img-top" alt="..." />
+                            <img src="https://img.hankyung.com/photo/202106/61241_201145_2219.jpg" className="card-img-top" alt="..." />
                             <StWriteBtn className="btn mt-4">참가 신청</StWriteBtn>
                         </div>
                         <div className="card-body cardWrap">
