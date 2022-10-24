@@ -74,7 +74,7 @@ const Login = () => {
         <Layout>
             <StLoginWrap>
                 <h6 className="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
-                <input className="checkbox" checked={join.checkedBox} onClick={() => { setJoin({ ...join, checkedBox: !join.checkedBox }) }} type="checkbox" id="reg-log" name="reg-log" />
+                <input className="checkbox" checked={join.checkedBox || false} onClick={() => { setJoin({ ...join, checkedBox: !join.checkedBox }) }} type="checkbox" id="reg-log" name="reg-log" readOnly />
                 <label htmlFor="reg-log"></label>
                 <div className='card-3d-wrap'>
                     <div className="card-3d-wrapper">
@@ -83,11 +83,11 @@ const Login = () => {
                                 <div className="section text-center">
                                     <h4 className="mb-4 pb-3">Log In</h4>
                                     <div className="form-group">
-                                        <input type="text" name="userid" value={login.userid || ""} onChange={loginHandle} className="form-style" placeholder="Your ID" id="logemail" autocomplete="off" />
+                                        <input type="text" name="userid" value={login.userid || ""} onChange={loginHandle} className="form-style" placeholder="Your ID" id="logemail" autoComplete="off" />
                                         <i className="input-icon uil uil-at"></i>
                                     </div>
                                     <div className="form-group mt-2">
-                                        <input type="password" name="pw" value={login.pw || ""} onChange={loginHandle} className="form-style" placeholder="Your Password" id="logpass" autocomplete="off" />
+                                        <input type="password" name="pw" value={login.pw || ""} onChange={loginHandle} className="form-style" placeholder="Your Password" id="logpass" autoComplete="off" />
                                         <i className="input-icon uil uil-lock-alt"></i>
                                     </div>
                                     <StSubmitBtn onClick={onLoginHandler} href="#" className="btn mt-4">Login</StSubmitBtn>
@@ -100,7 +100,7 @@ const Login = () => {
                                     <h4 className="mb-4 pb-3">Sign Up</h4>
                                     <div className="form-group">
                                         <StIdCheckWrap>
-                                            <input type="text" name="id" value={join.id || ""} onChange={joinHandle} className="form-style" placeholder="Your ID" autocomplete="off" />
+                                            <input type="text" name="id" value={join.id || ""} onChange={joinHandle} className="form-style" placeholder="Your ID" autoComplete="off" />
                                             <StSubmitBtn onClick={() => {
                                                 //유저 아이디 체크
                                                 if (join.id !== "") {
@@ -114,16 +114,16 @@ const Login = () => {
                                         <Valitext textColor={"#f96854"}>{isIdCheck !== undefined && !isIdCheck.success ? '중복된 ID입니다.' : ""}</Valitext>
                                     </div>
                                     <div className="form-group mt-2">
-                                        <input type="password" name="pw" value={join.pw || ""} onChange={joinHandle} className="form-style" placeholder="Your Password" autocomplete="off" />
+                                        <input type="password" name="pw" value={join.pw || ""} onChange={joinHandle} className="form-style" placeholder="Your Password" autoComplete="off" />
                                         <Valitext textColor={"#f96854"}>{join.pw === "" ? '비밀번호를 입력해주세요.' : ""}</Valitext>
                                     </div>
                                     <div className="form-group mt-2">
-                                        <input type="password" name="confirmPw" value={join.confirmPw || ""} onChange={joinHandle} className="form-style" placeholder="Confirm Password" autocomplete="off" />
+                                        <input type="password" name="confirmPw" value={join.confirmPw || ""} onChange={joinHandle} className="form-style" placeholder="Confirm Password" autoComplete="off" />
                                         <Valitext textColor={"#f96854"}>{join.confirmPw !== join.pw ? '비밀번호가 일치 하지 않습니다.' : ""}</Valitext>
                                         <Valitext textColor={"#22B14C"}>{join.confirmPw !== "" && join.confirmPw === join.pw ? '비밀번호가 일치 합니다.' : ""}</Valitext>
                                     </div>
                                     <div className="form-group mt-2">
-                                        <input type="text" name="name" value={join.name || ""} onChange={joinHandle} className="form-style" placeholder="Your Name" autocomplete="off" />
+                                        <input type="text" name="name" value={join.name || ""} onChange={joinHandle} className="form-style" placeholder="Your Name" autoComplete="off" />
                                         <Valitext textColor={"#f96854"}>{join.name === "" ? '이름을 입력해주세요.' : ""}</Valitext>
                                     </div>
                                     <StSubmitBtn onClick={signUp} className="btn mt-4">Join</StSubmitBtn>
