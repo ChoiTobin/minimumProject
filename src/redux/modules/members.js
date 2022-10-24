@@ -4,6 +4,44 @@ import { useCookies } from 'react-cookie'; // useCookies import
 
 
 
+//아이디 중복확인 api
+//"/member/idck"
+//{ "userid" :"fad"}
+export const __userIdCheck = createAsyncThunk(
+    "members/userIdCheck",
+    async (payload, thunkAPI) => {
+        try {
+            const response = await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/member/idck`,
+                {
+                    userid: payload
+                }
+            );
+            return thunkAPI.fulfillWithValue(response.data);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+)
+
+export const __insertMember = createAsyncThunk(
+    "members/signup",
+    async (payload, thunkAPI) => {
+        try {
+            const response = await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/member/signup`,
+                {
+                    userid: payload.id,
+                    pw: payload.pw,
+                    name: payload.name
+                });
+            return thunkAPI.fulfillWithValue(response.data);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+)
+
 const initialState = {
     member: [],
   isLoading: false,
@@ -47,95 +85,44 @@ const initialState = {
 
 
 export const membersSlice = createSlice({
-  name: "members",
-  initialState,
-  reducers: {
-    
-  },
-  extraReducers: {
+    name: "members",
+    initialState,
+    reducers: {
+      },
+    extraReducers: {
 
-    [__userLogin.pending]: (state) => {
-      state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
-    },
-    [__userLogin.fulfilled]: (state, action) => {
-      console.log("리듀서",state,action)
-      //console.log('사용자는?',action)
-      //console.log('state',state,'action',action)
-      state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다. 
-      state.member.push(action.payload) ; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
-    },
-    [__userLogin.rejected]: (state, action) => {
-      state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
-      state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
-    },
-
-}});
-
-
+        [__userLogin.pending]: (state) => {
+        state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
+        },
+        [__userLogin.fulfilled]: (state, action) => {
+          console.log("리듀서",state,action)
+          //console.log('사용자는?',action)
+          //console.log('state',state,'action',action)
+          state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다. 
+          state.member.push(action.payload) ; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+        },
+        [__userLogin.rejected]: (state, action) => {
+          state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
+          state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
+        },
+        //-__userIdCheck-
+        [__userIdCheck.fulfilled]: (state, action) => {
+            state.isIdCheck = action.payload;
+        },
+        [__userIdCheck.rejected]: (state, action) => {
+            state.error = action.payload;
+        },
+        //-__insertMember-
+        [__insertMember.fulfilled]: (state, action) => {
+            state.isInsert = action.payload;
+            state.isIdCheck = undefined;
+        },
+        [__insertMember.rejected]: (state, action) => {
+            state.error = action.payload;
+        },
+    }
+});
 
 export const { } = membersSlice.actions;
 export default membersSlice.reducer;
 
-
-
-
-
-
-/*
-
-
-//헤더로 토큰을보내는걸 저장하는거.=>  api명세서 헤더로 토큰 을받고. 저장해서 localstroage저장
-// 요청마다 헤더로 다시 보내는것 => 
-import { apis } from "../../shared/api";
-export const loginMemberDB = createAsyncThunk(
-  "member/login",
-  async (payload, thunkAPI) => {
-    try {
-      await apis.loginMember(payload).then((response) => {
-        if (response.data.success === false) {
-        } else {
-          return (
-            thunkAPI.fulfillWithValue(false),
-            localStorage.setItem("token", response.headers.authorization),
-            localStorage.setItem("memberId", response.data.data.memberId),
-            localStorage.setItem("refreshToken", response.headers.refreshtoken),
-            localStorage.setItem(
-              "accesstokenexpiretime",
-              response.headers.accesstokenexpiretime
-            ),
-            localStorage.setItem("nickname", response.data.data.nickname),
-           // localStorage.setItem("isKako", response.data.data.isKakao),
-            window.location.replace("/wklytodo")
-          );
-        }
-      });
-    } catch (error) {
-      return thunkAPI.rejectWithValue(true);
-      // if (error.response.status === 400 || error.response.status === 404) {
-      // }
-    }
-  }
-);
-
-//test
-export const membersSlice = createSlice({
-    name: "members",
-    initialState,
-    reducers: {
-      setCheck: (state, action) => {
-        state.isCheck = action.payload;
-      },
-    },
-    extraReducers: {
-      [loginMemberDB.fulfilled]: (state, action) => {
-        state.isCheck = action.payload;
-      },
-      [loginMemberDB.rejected]: (state, action) => {
-        //console.log(state,action)
-        state.isCheck = action.payload;
-      },
-      [loginMemberDB.pending]: () => {},
-    },
-  });
-
-  */
