@@ -3,6 +3,10 @@ import styled from "styled-components";
 import Layout from '../components/Layout';
 
 const Write = () => {
+
+
+
+    
     return (
         <Layout>
             <StWritePagelWrap>
