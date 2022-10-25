@@ -13,7 +13,6 @@ const Write = () => {
         inGameNickname: "",
         numberOfPeople: 2
     });
-
     const dispatch = useDispatch();
 
     const [imageUrl, setImageUrl] = useState(null);
@@ -24,24 +23,22 @@ const Write = () => {
         const reader = new FileReader();
 
         const file = imgRef.current.files[0];
-        //console.log("on", file)
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setImageUrl(reader.result);
             setImgFile(file)
-            //console.log(reader.result)
         };
     }
 
     const onSubmit = (e) => {
+        e.preventDefault();
         const formData = new FormData();
 
-        //글 내용 blob처리
-        const blob = new Blob([JSON.stringify(content)], { type: "application/json" });
-
-        console.log("content", content)
         formData.append("file", imgFile);
-        formData.append("json", blob);
+        formData.append("gamename", content.gamename);
+        formData.append("content", content.content);
+        formData.append("inGameNickname", content.inGameNickname);
+        formData.append("numberOfPeople", Number(content.numberOfPeople));
 
         dispatch(__insertContent(formData));
     }
@@ -50,30 +47,25 @@ const Write = () => {
         <Layout>
             <StWritePagelWrap>
                 <StWritePage>작성페이지</StWritePage>
-                <StWriteForm >
+                <StWriteForm method='post' id='add' encType='multipart/form-data'>
                     <StWriteWrap>
 
                         <StCard className="card" >
                             <div className='cardWrap'>
                                 <label htmlFor="imgFile">
                                     <img src={imageUrl ? imageUrl : process.env.PUBLIC_URL + "/img/noImg.jpg"} className="card-img-top" alt="game image" />
-                                    {/* <StImgTag src={imageUrl ? imageUrl : "https://img.hankyung.com/photo/202106/61241_201145_2219.jpg"}></StImgTag> */}
                                     <input
                                         style={{ display: 'none' }}
                                         accept="image/*"
                                         id="imgFile"
                                         name="imgFile"
                                         type="file"
+                                        multiple
                                         onChange={onChangeImage}
                                         ref={imgRef}
                                     />
-
                                     <StWriteBtn type='button' htmlFor='inputImg' className="btn mt-4">이미지 업로드</StWriteBtn>
                                 </label>
-
-
-                                {/* <input type="file" accept='image/*' id='inputImg' /> */}
-
                             </div>
                             <div className="card-body cardWrap d-grid gap-2">
                                 <input type="text" name='gamename' value={content.gamename || ''} onChange={contentHandle} className="form-control text-center" id="floatingInput" placeholder="game name" />
@@ -85,7 +77,7 @@ const Write = () => {
                     </StWriteWrap>
                     <StBtnWrap>
                         <StWriteBtn type='button' className="btn mt-4">이전으로</StWriteBtn>
-                        <StWriteBtn onClick={onSubmit} className="btn mt-4">작성하기</StWriteBtn>
+                        <StWriteBtn type='submit' form='add' onClick={onSubmit} className="btn mt-4">작성하기</StWriteBtn>
                     </StBtnWrap>
                 </StWriteForm>
             </StWritePagelWrap>
@@ -134,7 +126,7 @@ const StWriteForm = styled.div`
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 `
 
-const StWriteWrap = styled.div`
+const StWriteWrap = styled.form`
     display:flex;
     flex-direction : column;
     justify-content : space-around;
@@ -164,8 +156,8 @@ const StWriteBtn = styled.a`
     color: white;
     background-color : #1f2029;
     &:hover {
-        color: white;
-        color: #1f2029;
+        color:  #1f2029;
+        background-color: white;
         box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
     }
 `
@@ -173,7 +165,7 @@ const StCard = styled.div`
     display : flex;
     flex-direction : row;
     align-items :center;
-    width:50rem;
+    width:100%;
     height : 25rem;
     margin :10px;
     color: black;

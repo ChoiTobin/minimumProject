@@ -5,25 +5,21 @@ export const __insertContent = createAsyncThunk(
     "contents/insert",
     async (payload, thunkAPI) => {
         try {
-            console.log(payload)
             await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/gamepost`,//url
-
+                `${process.env.REACT_APP_API_URL}/api/gamepost`,
+                payload,
                 {
-                    ...payload
+                    headers: {
+                        'enctype': 'multipart/form-data',
+                        'Access_Token': `${localStorage.getItem("token")}`,
+                        'Cache-Control': 'no-cache'
+                    },
                 }
-                ,//data
-                {
-                    header: {
-                        //"Content-Type": "multipart/form-data",
-                        "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZWg1MTY0IiwiZXhwIjoxNjY2Njc4MjA3LCJpYXQiOjE2NjY2NzY0MDd9.qLltziot-E-dVDPoOTq3ElHhegDTTL38JiV70myVPz0"
-                    }
-                }//config
             ).then((response) => {
-                console.log(response)
-                return thunkAPI.fulfillWithValue(response.data)
-            })
+                console.log("response", response.data);
+            });
         } catch (error) {
+            console.log("error", error);
             return thunkAPI.rejectWithValue(error);
         }
     }
