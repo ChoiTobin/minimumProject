@@ -1,6 +1,6 @@
 // src/hooks/useInput.js
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 const useInput = (init = {}) => {
     // 2. value는 useState로 관리하고, 
