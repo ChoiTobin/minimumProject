@@ -1,29 +1,94 @@
-import React from 'react';
+import React, { useRef,useEffect,useState } from 'react';
 import styled from "styled-components";
 import Layout from '../components/Layout';
+import useInput from '../hooks/useInput';
+import {__getDetailOne, __delete} from "../redux/modules/contents"
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
+import {___Join} from "../redux/modules/contents"
+
+
 
 const Detail = () => {
+    const getDetail = useSelector((state) => state.contents)
+    const getDetailDone = useSelector((state) => state)
+    const dispatch = useDispatch();
+
+    const [content, setContent, contentHandle] = useInput({
+        gamename: "",
+        content: "",
+        inGameNickname: "",
+        numberOfPeople: 2
+    });
+
+
+    useEffect(() => {
+        // dispatch(__getListDone())
+        dispatch(
+            __getDetailOne()  
+        );
+    }, [dispatch]);
+   
+
+
+    const joinHandler = () =>{
+
+       dispatch(
+        ___Join({
+            Nickname:content.inGameNickname,
+            postId:getDetail.getDetailOne.gamePostId,
+        }    
+)
+        //gamePostid도 던져줘야함.  
+        );
+    }
+
+    
+    const deleteHandler = () =>{
+        
+        dispatch(
+            __delete({
+            postId:getDetail.deleteJoin.gamePostId
+        }
+            )
+        );
+
+    }
+
+
+    
+
+
     return (
         <Layout>
             <StDetailPagelWrap>
                 <StDetailPage>상세페이지</StDetailPage>
                 <StDetailContainer>
                     <StDetailWrap>
-                        <StDetailTitle>게임이름</StDetailTitle>
-                        <StDetailBody>모집 내용</StDetailBody>
-                        <StDetailPerson>모집인원 1/?
-                            <div>작성자 게임아이디</div>
-                        </StDetailPerson>
-                        <StDetailGameId >
-                            <div className="form-floating mb-3">
-                                <input type="text" className="form-control text-center" id="floatingInput" placeholder="game id" />
-                                <label className='text-center' htmlFor="floatingInput">게임 아이디</label>
+                        <StCard className="card" >
+                            <div className='cardWrap'>
+                                <img src={getDetail.contents.imgUrl} className="card-img-top" alt="game image" />
                             </div>
-                        </StDetailGameId>
+                            <div className="card-body cardWrap d-grid gap-2">
+                                <input type="text" name='gamename' value={`${getDetail.contents.gameName}`} className="form-control text-center" id="floatingInput" placeholder="game name" readOnly />
+                                <p>{`현재인원:${getDetail.contents.numberOfPeople}`}</p>
+                                <StDetailBody name='content' value={getDetail.contents.content} placeholder="game contents" readOnly />
+                                <input type="text" name='inGameNickname' value={content.inGameNickname || ""} onChange={contentHandle} className="form-control text-center" id="floatingInput" placeholder="game id" />
+                            </div>
+                        </StCard>
                     </StDetailWrap>
                     <StBtnWrap>
-                        <StDetailBtn className="btn mt-4">이전으로</StDetailBtn>
-                        <StDetailBtn className="btn mt-4">참가 신청</StDetailBtn>
+                        <StDetailBtn className="btn mt-4" ><StyledLink to={"/list"}>이전으로</StyledLink></StDetailBtn>
+                        
+                        <StDetailBtn className="btn mt-4" onClick={()=>{joinHandler() }}>참가 신청</StDetailBtn>
+                        
+                        <StDetailBtn className="btn mt-4" onClick={()=>{deleteHandler() }}>참가 취소</StDetailBtn>
+                            
+                        
+                        
+                        {/* 조건에 따라서 함수도 취소로 */}
+                        
+                    
                     </StBtnWrap>
                 </StDetailContainer>
             </StDetailPagelWrap>
@@ -32,6 +97,15 @@ const Detail = () => {
 };
 
 export default Detail;
+const StyledLink = styled(Link)`
+	box-sizing: border-box;
+	display: block;
+	padding: 4px 8px;
+	margin: 0 auto;
+    color:white;
+    text-decoration:none;
+	text-align: center;
+`;
 
 const StDetailPagelWrap = styled.div`
 width:69%;
@@ -80,41 +154,6 @@ const StDetailWrap = styled.div`
     
 `
 
-const StDetailTitle = styled.div`
-    width : 100%;
-    height : 30px;
-    margin-top : 10px;
-        border-radius : 5px;
-        background-color : white;
-        color: #1f2029;
-        
-`
-
-const StDetailBody = styled.div`
-    width : 100%;
-    min-height : 200px;
-    background-color : white;
-        color: #1f2029;
-        border-radius : 5px;
-`
-
-const StDetailPerson = styled.div`
-    width : 100%;
-    height : 30px;
-    min-height : 200px;
-    background-color : white;
-        color: #1f2029;
-        border-radius : 5px;;
-`
-
-const StDetailGameId = styled.div`
-    width : 30%;
-    height : 50px;
-    margin : 0 auto;
-    background-color : white;
-        color: #1f2029;
-        border-radius : 5px;
-`
 const StBtnWrap = styled.div`
     display : flex;
     flex-direction : row;
@@ -126,8 +165,34 @@ const StDetailBtn = styled.a`
     color: white;
     background-color : #1f2029;
     &:hover {
-        color: white;
+        background-color: white;
         color: #1f2029;
         box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
     }
+`
+
+const StCard = styled.div`
+    display : flex;
+    flex-direction : row;
+    align-items :center;
+    width:100%;
+    height : 25rem;
+    margin :10px;
+    color: black;
+    .cardWrap{
+        width : 50%;
+    }
+    .cardWrap img{
+        height : 220px;
+    }
+`
+
+const StDetailBody = styled.textarea`
+    min-height : 200px;
+    width : 100%;
+    margin : 10px auto;
+    background-color : white;
+    color: #1f2029;
+    border-radius : 5px;
+    resize: none;
 `
