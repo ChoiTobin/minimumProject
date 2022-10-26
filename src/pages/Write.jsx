@@ -26,19 +26,38 @@ const Write = () => {
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setImageUrl(reader.result);
-            setImgFile(file)
+            setImgFile(file);
         };
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
+        // formData.append(
+        //     "content", new Blob([JSON.stringify(content)], { type: "application/json" })
+        // );
 
-        formData.append("file", imgFile);
-        formData.append("gamename", content.gamename);
-        formData.append("content", content.content);
-        formData.append("inGameNickname", content.inGameNickname);
-        formData.append("numberOfPeople", Number(content.numberOfPeople));
+        //파일 유무
+        if (imgFile === "") {
+            formData.append("multipartFile", null);
+        } else {
+            formData.append("multipartFile", imgFile);
+        }
+
+
+        //formData.append("content", JSON.stringify(JSON.stringify(content)));
+
+        //잘들어옴
+        let obj = {
+            gamename: content.gamename,
+            content: content.content,
+            inGameNickname: content.inGameNickname,
+            numberOfPeople: Number(content.numberOfPeople)
+        }
+
+        //console.log(JSON.stringify(obj))
+
+        formData.append("content", JSON.stringify(obj));
 
         dispatch(__insertContent(formData));
     }
