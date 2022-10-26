@@ -3,12 +3,13 @@ import styled from "styled-components";
 import Layout from '../components/Layout';
 import useInput from '../hooks/useInput';
 import { useDispatch, useSelector } from "react-redux";
-import { __getMyPost, __deleteContent, getMyPost } from '../redux/modules/contents'
-
+import { __getMyPost, __deleteContent, __getDetailOne, getMyPost } from '../redux/modules/contents'
+import { useNavigate } from "react-router-dom";
 
 
 const MyList = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { myPost, myRecruit, isLoading } = useSelector(state => state.contents);
     const [swap, setSwap] = useState(true);
 
@@ -26,7 +27,6 @@ const MyList = () => {
             <StListPagelWrap>
                 <StListPage onClick={contentSW}>{swap ? "나의 글" : "참여한 글"}</StListPage>
                 <StListContainer>
-                    {console.log(myPost)}
                     {isLoading === undefined ? "" :
                         isLoading ? "" :
                             swap ?
@@ -52,7 +52,7 @@ const MyList = () => {
                                         <StCard className="card" key={i}>
                                             <div className='cardWrap'>
                                                 <img src={val.imgUrl} className="card-img-top" alt="game image" />
-                                                {/* <StWriteBtn onClick={() => { dispatch(__getDetailOne(val.gamePostId));}} className="btn mt-4">자세히 보기</StWriteBtn> */}
+                                                <StWriteBtn onClick={() => { navigate(`/detail/${val.gamePostId}`) }} className="btn mt-4">자세히 보기</StWriteBtn>
                                             </div>
                                             <div className="card-body cardWrap">
                                                 <p className="card-text">{val.countTime}</p>
