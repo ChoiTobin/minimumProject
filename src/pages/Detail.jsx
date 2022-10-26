@@ -2,15 +2,22 @@ import React, { useRef } from 'react';
 import styled from "styled-components";
 import Layout from '../components/Layout';
 import useInput from '../hooks/useInput';
+import { useDispatch, useSelector } from "react-redux";
+import { __getMyPost } from '../redux/modules/contents'
 
 const Detail = () => {
-
+    const dispatch = useDispatch();
     const [content, setContent, contentHandle] = useInput({
         gamename: "",
         content: "",
         inGameNickname: "",
         numberOfPeople: 2
     });
+
+    const test = () => {
+        dispatch(__getMyPost());
+    }
+
     return (
         <Layout>
             <StDetailPagelWrap>
@@ -30,11 +37,11 @@ const Detail = () => {
                     </StDetailWrap>
                     <StBtnWrap>
                         <StDetailBtn className="btn mt-4">이전으로</StDetailBtn>
-                        <StDetailBtn className="btn mt-4">참가 신청</StDetailBtn>
+                        <StDetailBtn onClick={test} className="btn mt-4">참가 신청</StDetailBtn>
                     </StBtnWrap>
                 </StDetailContainer>
             </StDetailPagelWrap>
-        </Layout>
+        </Layout >
     );
 };
 
