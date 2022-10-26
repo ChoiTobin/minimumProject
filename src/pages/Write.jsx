@@ -4,9 +4,7 @@ import Layout from '../components/Layout';
 import useInput from '../hooks/useInput';
 import { useDispatch, useSelector } from "react-redux";
 import { __insertContent } from '../redux/modules/contents'
-
 const Write = () => {
-
     const [content, setContent, contentHandle] = useInput({
         gamename: "",
         content: "",
@@ -14,14 +12,11 @@ const Write = () => {
         numberOfPeople: 2
     });
     const dispatch = useDispatch();
-
     const [imageUrl, setImageUrl] = useState(null);
     const [imgFile, setImgFile] = useState("")
     const imgRef = useRef();
-
     const onChangeImage = () => {
         const reader = new FileReader();
-
         const file = imgRef.current.files[0];
         reader.readAsDataURL(file);
         reader.onloadend = () => {
@@ -29,24 +24,19 @@ const Write = () => {
             setImgFile(file);
         };
     }
-
     const onSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
         // formData.append(
         //     "content", new Blob([JSON.stringify(content)], { type: "application/json" })
         // );
-
         //파일 유무
         if (imgFile === "") {
             formData.append("multipartFile", null);
         } else {
             formData.append("multipartFile", imgFile);
         }
-
-
         //formData.append("content", JSON.stringify(JSON.stringify(content)));
-
         //잘들어옴
         let obj = {
             gamename: content.gamename,
@@ -54,21 +44,16 @@ const Write = () => {
             inGameNickname: content.inGameNickname,
             numberOfPeople: Number(content.numberOfPeople)
         }
-
         //console.log(JSON.stringify(obj))
-
         formData.append("content", JSON.stringify(obj));
-
         dispatch(__insertContent(formData));
     }
-
     return (
         <Layout>
             <StWritePagelWrap>
                 <StWritePage>작성페이지</StWritePage>
                 <StWriteForm method='post' id='add' encType='multipart/form-data'>
                     <StWriteWrap>
-
                         <StCard className="card" >
                             <div className='cardWrap'>
                                 <label htmlFor="imgFile">
@@ -103,10 +88,7 @@ const Write = () => {
         </Layout>
     );
 };
-
 export default Write;
-
-
 const StWritePagelWrap = styled.div`
 width: 66%;
     display:flex;
@@ -120,7 +102,6 @@ width: 66%;
         height : 38rem;
     }
 `
-
 const StWritePage = styled.div`
     text-align : center;
     color: white;
@@ -128,54 +109,48 @@ const StWritePage = styled.div`
     height : 40px;
     font-weight : 1000;
     font-size : 28px;
-    background-color: #2a2b38;
+    background-color: #2A2B38;
     border-radius : 1rem;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 `
-
 const StWriteForm = styled.div`
     text-align : center;
-    color: #c4c3ca;
+    color: #C4C3CA;
     display:flex;
     flex-direction : column;
     align-items :center;
     width : 80%;
-    background-color: #2a2b38;
+    background-color: #2A2B38;
     border-radius : 1rem;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 `
-
 const StWriteWrap = styled.form`
     display:flex;
     flex-direction : column;
     justify-content : space-around;
     gap : 10px;
     width : 80%;
-    
 `
-
 const StWriteBody = styled.textarea`
     min-height : 200px;
     width : 100%;
     margin : 10px auto;
     background-color : white;
-    color: #1f2029;
+    color: #1F2029;
     border-radius : 5px;
     resize: none;
 `
-
 const StBtnWrap = styled.div`
     display : flex;
     flex-direction : row;
     gap : 10px;
 `
-
 const StWriteBtn = styled.a`
     margin-bottom : 10px;
     color: white;
-    background-color : #1f2029;
+    background-color : #1F2029;
     &:hover {
-        color:  #1f2029;
+        color:  #1F2029;
         background-color: white;
         box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
     }

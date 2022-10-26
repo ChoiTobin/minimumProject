@@ -1,12 +1,19 @@
-import React, { useRef } from 'react';
+import React, { useRef,useEffect,useState } from 'react';
 import styled from "styled-components";
 import Layout from '../components/Layout';
 import useInput from '../hooks/useInput';
+import {__getDetailOne, __delete} from "../redux/modules/contents"
 import { useDispatch, useSelector } from "react-redux";
-import { __getMyPost } from '../redux/modules/contents'
+import { Link } from 'react-router-dom';
+import {___Join} from "../redux/modules/contents"
+
+
 
 const Detail = () => {
+    const getDetail = useSelector((state) => state.contents)
+    const getDetailDone = useSelector((state) => state)
     const dispatch = useDispatch();
+
     const [content, setContent, contentHandle] = useInput({
         gamename: "",
         content: "",
@@ -14,9 +21,43 @@ const Detail = () => {
         numberOfPeople: 2
     });
 
-    const test = () => {
-        dispatch(__getMyPost());
+
+    useEffect(() => {
+        // dispatch(__getListDone())
+        dispatch(
+            __getDetailOne()  
+        );
+    }, [dispatch]);
+   
+
+
+    const joinHandler = () =>{
+
+       dispatch(
+        ___Join({
+            Nickname:content.inGameNickname,
+            postId:getDetail.getDetailOne.gamePostId,
+        }    
+)
+        //gamePostid도 던져줘야함.  
+        );
     }
+
+    
+    const deleteHandler = () =>{
+        
+        dispatch(
+            __delete({
+            postId:getDetail.deleteJoin.gamePostId
+        }
+            )
+        );
+
+    }
+
+
+    
+
 
     return (
         <Layout>
@@ -26,26 +67,45 @@ const Detail = () => {
                     <StDetailWrap>
                         <StCard className="card" >
                             <div className='cardWrap'>
-                                <img src={process.env.PUBLIC_URL + "/img/noImg.jpg"} className="card-img-top" alt="game image" />
+                                <img src={getDetail.contents.imgUrl} className="card-img-top" alt="game image" />
                             </div>
                             <div className="card-body cardWrap d-grid gap-2">
-                                <input type="text" name='gamename' value={"모집 제목"} className="form-control text-center" id="floatingInput" placeholder="game name" readOnly />
-                                <StDetailBody name='content' value={"모집인원 1/?\n모집내용"} placeholder="game contents" readOnly />
-                                <input type="text" name='inGameNickname' value={''} onChange={contentHandle} className="form-control text-center" id="floatingInput" placeholder="game id" />
+                                <input type="text" name='gamename' value={`${getDetail.contents.gameName}`} className="form-control text-center" id="floatingInput" placeholder="game name" readOnly />
+                                <p>{`현재인원:${getDetail.contents.numberOfPeople}`}</p>
+                                <StDetailBody name='content' value={getDetail.contents.content} placeholder="game contents" readOnly />
+                                <input type="text" name='inGameNickname' value={content.inGameNickname || ""} onChange={contentHandle} className="form-control text-center" id="floatingInput" placeholder="game id" />
                             </div>
                         </StCard>
                     </StDetailWrap>
                     <StBtnWrap>
-                        <StDetailBtn className="btn mt-4">이전으로</StDetailBtn>
-                        <StDetailBtn onClick={test} className="btn mt-4">참가 신청</StDetailBtn>
+                        <StDetailBtn className="btn mt-4" ><StyledLink to={"/list"}>이전으로</StyledLink></StDetailBtn>
+                        
+                        <StDetailBtn className="btn mt-4" onClick={()=>{joinHandler() }}>참가 신청</StDetailBtn>
+                        
+                        <StDetailBtn className="btn mt-4" onClick={()=>{deleteHandler() }}>참가 취소</StDetailBtn>
+                            
+                        
+                        
+                        {/* 조건에 따라서 함수도 취소로 */}
+                        
+                    
                     </StBtnWrap>
                 </StDetailContainer>
             </StDetailPagelWrap>
-        </Layout >
+        </Layout>
     );
 };
 
 export default Detail;
+const StyledLink = styled(Link)`
+	box-sizing: border-box;
+	display: block;
+	padding: 4px 8px;
+	margin: 0 auto;
+    color:white;
+    text-decoration:none;
+	text-align: center;
+`;
 
 const StDetailPagelWrap = styled.div`
 width:69%;
