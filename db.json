@@ -1,57 +1,10 @@
 {
-  "login": [
-    {
-      "id": 1
-    },
-    {
-      "id": 2
-    },
-    {
-      "id": 3
-    },
-    {
-      "id": 4
-    },
-    {
-      "id": 5
-    },
-    {
-      "id": 6
-    },
-    {
-      "id": 7
-    },
-    {
-      "id": 8
-    },
-    {
-      "userid": "asd",
-      "pw": "asd",
-      "id": 9
-    },
-    {
-      "userid": "asd",
-      "pw": "asd",
-      "id": 10
-    },
-    {
-      "userid": "asd",
-      "pw": "asd",
-      "id": 11
-    },
-    {
-      "test": "asdasd",
-      "id": 12
+  "data": [
+    {    
+      "success":true,
+      "data":null
+    
     }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+
+  ]  
 }
