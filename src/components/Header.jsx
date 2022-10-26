@@ -8,13 +8,26 @@ function Header() {
 
     return (
         <HeadContainer>
-            <StHomeBtn onClick={() => { navigate("/") }}>
+            <StHomeBtn onClick={() => { navigate("/List") }}>
                 <IoMdHome className="head-ico" />
                 <div>Find game friends</div>
             </StHomeBtn>
             <StNavWrap>
-                <StNavItem>My List</StNavItem>
-                <StNavItem>Writing</StNavItem>
+                {
+                    localStorage.getItem("token") === null ?
+                        <StNavItem onClick={() => { navigate("/") }}>Login</StNavItem>
+
+                        :
+                        <>
+                            <StNavItem onClick={() => {
+                                localStorage.clear();
+                                navigate("/");
+                            }
+                            }>Logout</StNavItem>
+                            <StNavItem onClick={() => { navigate("/MyList") }}>My List</StNavItem>
+                            <StNavItem onClick={() => { navigate("/Write") }}>Write</StNavItem>
+                        </>
+                }
             </StNavWrap>
         </HeadContainer>
     );

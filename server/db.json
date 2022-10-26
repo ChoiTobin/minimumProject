@@ -15,5 +15,51 @@
       "pw": "123",
       "name": "zxc"
     }
+  ],
+  "contents": [
+    
+  ]
+  ,
+  "myPost":[
+    { 
+      "content": "ㅈㅈㅈ",
+      "countTime": "9시간 전",
+      "gameName": "ㅂㅂㅂ",
+      "gamePostId": 5,
+      "imgUrl": "https://eunibucket.s3.ap-northeast-2.amazonaws.com/images/6fa69491-a238-46c8-a463-64711553f9ef.jpeg",
+      "inGameNickname": null,
+      "numberOdRecruited": 0,
+      "numberOfPeople": 2,
+      "postTime": "10월 26일 12시 42분",
+      "recruitStatus": true
+    },
+    { 
+      "content": "ㅈㅈㅈ",
+      "countTime": "9시간 전",
+      "gameName": "ㅂㅂㅂ",
+      "gamePostId": 5,
+      "imgUrl": "https://eunibucket.s3.ap-northeast-2.amazonaws.com/images/6fa69491-a238-46c8-a463-64711553f9ef.jpeg",
+      "inGameNickname": null,
+      "numberOdRecruited": 0,
+      "numberOfPeople": 2,
+      "postTime": "10월 26일 12시 42분",
+      "recruitStatus": true
+    },
+    { 
+      "content": "ㅈㅈㅈ",
+      "countTime": "9시간 전",
+      "gameName": "ㅂㅂㅂ",
+      "gamePostId": 5,
+      "imgUrl": "https://eunibucket.s3.ap-northeast-2.amazonaws.com/images/6fa69491-a238-46c8-a463-64711553f9ef.jpeg",
+      "inGameNickname": null,
+      "numberOdRecruited": 0,
+      "numberOfPeople": 2,
+      "postTime": "10월 26일 12시 42분",
+      "recruitStatus": true
+    }
+  ]
+  ,
+  "myRecruit":[
+  
   ]
 }
