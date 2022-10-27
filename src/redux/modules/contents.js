@@ -114,19 +114,28 @@ export const __getDetailOne = createAsyncThunk(
 export const ___Join = createAsyncThunk(
     "contents/Join",
     async (payload, thunkAPI) => {
+      const data = JSON.stringify({inGameNickname: payload.Nickname,postId:payload.postId})
         try {
-            await axios.put(
-                `${process.env.REACT_APP_API_URL}/api/gamepost/recruit/${payload.postId}`
+          console.log("너어디?",data)
+            await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/gamepost/recruit/a
+                `
+                //패치
+                //payload.postId
                 , {
-                    inGameNickname: payload.Nickname
-                }
+                  data
+                  
+                //     inGameNickname:payload.Nickname,
+                //     postId:payload.postId
+                // 
+              }
                 , {
                     headers: {
                         'Access_Token': `${localStorage.getItem("token")}`,
                     },
                 }
             ).then((response) => {
-
+              console.log("리스폰스Join",response)
                 return thunkAPI.fulfillWithValue(response)
             })
         } catch (error) {
@@ -134,6 +143,31 @@ export const ___Join = createAsyncThunk(
         }
     }
 )
+
+
+
+// export const __deleteContent = createAsyncThunk(
+//   "contents/delete",
+//   async (payload, thunkAPI) => {
+//       try {
+//           await axios.delete(
+//               `${process.env.REACT_APP_API_URL}/api/gamepost/${payload}`,
+//               {
+//                   headers: {
+//                       'Access_Token': `${localStorage.getItem("token")}`,
+//                   },
+//               }
+//           ).then((response) => {
+//               if (response.data.success) {
+//                   //삭제 성공
+//                   return thunkAPI.fulfillWithValue(payload);
+//               }
+//           })
+//       } catch (error) {
+//           return thunkAPI.rejectWithValue(error);
+//       }
+//   }
+// );
 
 
 

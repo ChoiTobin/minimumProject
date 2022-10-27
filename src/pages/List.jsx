@@ -55,6 +55,7 @@ const List = () => {
         dispatch(__getDetailOne(id));
     }
 
+    //console.log("어떻게뜰까?",list2,listDone)
 
 
 
@@ -86,7 +87,7 @@ const List = () => {
                                         <div className="card-text">{item.content}</div>
                                         <div className="card-text">작성시간</div>
                                         <div className="card-text">{item.countTime}</div>
-                                        <div className="card-text">모집 인원 {item.numberOfPeople}/8</div>
+                                        <div className="card-text">모집 인원 {item.numberOdRecruited}/{item.numberOfPeople}</div>
                                     </div>
                                 </StCard>
                             )
@@ -106,7 +107,8 @@ const List = () => {
                                         <div className="card-text">{item.content}</div>
                                         <div className="card-text">작성시간</div>
                                         <div className="card-text">{item.postTime}</div>
-                                        <div className="card-text">모집 인원 {item.numberOfPeople}?</div>
+                                        <div className="card-text">모집 인원 {item.numberOdRecruited
+}/{item.numberOfPeople}</div>
                                     </div>
                                 </StCard>
                             )
