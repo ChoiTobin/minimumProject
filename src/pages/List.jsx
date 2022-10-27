@@ -3,12 +3,9 @@ import styled from "styled-components";
 import Layout from '../components/Layout';
 import './action.css'
 import { useDispatch, useSelector } from "react-redux";
-import { __getList } from '../redux/modules/contents'
-import { __getListDone } from '../redux/modules/contents'
+import { __getList, __getSearch, __getDetailOne, __getListDone, searchPost } from '../redux/modules/contents'
 import { Link, useParams } from 'react-router-dom';
 import useInput from '../hooks/useInput';
-import { __getSearch } from '../redux/modules/contents';
-import { __getDetailOne } from '../redux/modules/contents';
 //params로 보내고 url로 보낸다는뜻 =>그리고 엔터로친거를 보내고 페이로드로 그리고 데이터 보낸것과 비교해서
 //filter써서 보여주기?
 /*
@@ -20,20 +17,21 @@ return thunkAPI.fulfillWithValue(res.data)
 
 const List = () => {
     //const listDone = useSelector((state) => state.contents.contentsDone.data)
-    const list2 = useSelector((state) => state.contents.contents)
-    const listDone = useSelector((state) => state.contents.contentsDone)
+    // const list2 = useSelector((state) => state.contents.contents)
+    // const listDone = useSelector((state) => state.contents.contentsDone)
 
-
+    const { contents, contentsDone } = useSelector((state) => state.contents)
 
     const dispatch = useDispatch();
 
-    const [gameName, setSerch, loginHandle] = useInput({
+    const [search, setSerch, searchHandle] = useInput({
         gameName: "",
     });
     let [done, setDone] = useState(true)
 
-    const onLoginHandler = () => {
-        dispatch(__getSearch(gameName));
+    const onSearchHandler = () => {
+        dispatch(searchPost(search.gameName));
+        //dispatch(__getSearch(search.gameName));
     };
     //여긴 아직안함
 
@@ -55,6 +53,7 @@ const List = () => {
         dispatch(__getDetailOne(id));
     }
 
+    //console.log("어떻게뜰까?",list2,listDone)
 
 
 
@@ -65,36 +64,40 @@ const List = () => {
                 <StListPage onClick={() => { setDone(!done) }}>{done ? '모집중' : '모집완료'} </StListPage>
                 <StSearch>
                     <div className="input-group mb-3">
-                        <input name="gameName" onChange={loginHandle} value={gameName.gameName || ""} type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" />
-                        <button onClick={onLoginHandler} className="btn btn-outline-secondary" type="button" id="button-addon2">search</button>
+                        <input name="gameName" onChange={searchHandle} value={search.gameName || ""} type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" />
+                        <button onClick={onSearchHandler} className="btn btn-outline-secondary" type="button" id="button-addon2">search</button>
                     </div>
                 </StSearch>
                 <StListContainer>
                     {
                         //filter((item) => item.recruitStatus == true)
                         done ?
-                            list2.map((item, a) =>
-                                <StCard className="card" key={a}>
-                                    <div className='cardWrap'>
-                                        <img src={item.imgUrl} className="card-img-top" alt="..." />
-                                        <StWriteBtn className="btn mt-4"><StyledLink
-                                            onClick={() => { handlerDispatch(item.gamePostId) }}
-                                            to={`/detail/${item.gamePostId}`}>참가 신청</StyledLink></StWriteBtn>
-                                    </div>
-                                    <div className="card-body cardWrap">
-                                        <h5 className="card-title">{item.gameName}</h5>
-                                        <div className="card-text">{item.content}</div>
-                                        <div className="card-text">작성시간</div>
-                                        <div className="card-text">{item.countTime}</div>
-                                        <div className="card-text">모집 인원 {item.numberOfPeople}/8</div>
-                                    </div>
-                                </StCard>
-                            )
+                            contents !== undefined ?
+                                contents.map((item, a) =>
+                                    <StCard className="card" key={a}>
+                                        <div className='cardWrap'>
+                                            <img src={item.imgUrl} className="card-img-top" alt="game iamge" />
+                                            <StWriteBtn className="btn mt-4">
+                                                <StyledLink onClick={() => {
+                                                    handlerDispatch(item.gamePostId)
+                                                }}
+                                                    to={`/detail/${item.gamePostId}`}>참가 신청</StyledLink>
+                                            </StWriteBtn>
+                                        </div>
+                                        <div className="card-body cardWrap">
+                                            <h5 className="card-title">{item.gameName}</h5>
+                                            <div className="card-text">{item.content}</div>
+                                            <div className="card-text">작성시간</div>
+                                            <div className="card-text">{item.countTime}</div>
+                                            <div className="card-text">모집 인원 {item.numberOdRecruited}/{item.numberOfPeople}</div>
+                                        </div>
+                                    </StCard>
+                                ) : ""
                             :
-                            listDone.map((item, v) =>
+                            contentsDone.map((item, v) =>
                                 <StCard className="card" key={v}>
                                     <div className='cardWrap'>
-                                        <img src={item.imgUrl} className="card-img-top" alt="..." />
+                                        <img src={item.imgUrl} className="card-img-top" alt="game iamge" />
                                         <StWriteBtn className="btn mt-4">
                                             <StyledLink
                                                 onClick={() => { handlerDispatch(item.gamePostId) }}
@@ -106,7 +109,8 @@ const List = () => {
                                         <div className="card-text">{item.content}</div>
                                         <div className="card-text">작성시간</div>
                                         <div className="card-text">{item.postTime}</div>
-                                        <div className="card-text">모집 인원 {item.numberOfPeople}?</div>
+                                        <div className="card-text">모집 인원 {item.numberOdRecruited
+                                        }/{item.numberOfPeople}</div>
                                     </div>
                                 </StCard>
                             )
@@ -193,7 +197,7 @@ const StCard = styled.div`
         height : 110px;
     }
 `
-const StWriteBtn = styled.a`
+const StWriteBtn = styled.button`
     margin-bottom : 10px;
     color: white;
     background-color : #1f2029;

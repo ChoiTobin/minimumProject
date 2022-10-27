@@ -1,18 +1,19 @@
-import React, { useRef,useEffect,useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from "styled-components";
 import Layout from '../components/Layout';
 import useInput from '../hooks/useInput';
-import {__getDetailOne, __delete} from "../redux/modules/contents"
+import { __getDetailOne, __delete } from "../redux/modules/contents"
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
-import {___Join} from "../redux/modules/contents"
-
+import { ___Join } from "../redux/modules/contents"
+import { useParams } from 'react-router-dom';
 
 
 const Detail = () => {
     const getDetail = useSelector((state) => state.contents)
     const getDetailDone = useSelector((state) => state)
     const dispatch = useDispatch();
+    const params = useParams()
 
     const [content, setContent, contentHandle] = useInput({
         gamename: "",
@@ -25,41 +26,42 @@ const Detail = () => {
     useEffect(() => {
         // dispatch(__getListDone())
         dispatch(
-            __getDetailOne()  
+            __getDetailOne(params.id)
         );
     }, [dispatch]);
-   
 
 
-    const joinHandler = () =>{
 
-       dispatch(
-        ___Join({
-            Nickname:content.inGameNickname,
-            postId:getDetail.getDetailOne.gamePostId,
-        }    
-)
-        //gamePostid도 던져줘야함.  
+    const joinHandler = () => {
+        dispatch(
+            ___Join({
+                Nickname: content.inGameNickname,
+                postId: params.id,
+            }
+            )
+            //gamePostid도 던져줘야함.  
         );
     }
+    // console.log("값확인",getDetail.getDetailOne.gamePostId)
+    // console.log(getDetail)
 
-    
-    const deleteHandler = () =>{
-        
+
+    const deleteHandler = () => {
+
         dispatch(
             __delete({
-            postId:getDetail.deleteJoin.gamePostId
-        }
+                postId: getDetail.deleteJoin.gamePostId
+            }
             )
         );
 
     }
 
 
-    
-
 
     return (
+
+
         <Layout>
             <StDetailPagelWrap>
                 <StDetailPage>상세페이지</StDetailPage>
@@ -67,34 +69,30 @@ const Detail = () => {
                     <StDetailWrap>
                         <StCard className="card" >
                             <div className='cardWrap'>
-                                <img src={getDetail.contents.imgUrl} className="card-img-top" alt="game image" />
+                                <img src={getDetail.getDetailOne.imgUrl} className="card-img-top" alt="game image" />
                             </div>
                             <div className="card-body cardWrap d-grid gap-2">
-                                <input type="text" name='gamename' value={`${getDetail.contents.gameName}`} className="form-control text-center" id="floatingInput" placeholder="game name" readOnly />
-                                <p>{`현재인원:${getDetail.contents.numberOfPeople}`}</p>
-                                <StDetailBody name='content' value={getDetail.contents.content} placeholder="game contents" readOnly />
+                                <input type="text" name='gamename' value={getDetail.getDetailOne.gameName} className="form-control text-center" id="floatingInput" placeholder="game name" readOnly />
+                                <p>{`모집인원:${getDetail.getDetailOne.numberOfPeople}`}</p>
+                                <StDetailBody name='content' value={getDetail.getDetailOne.content} placeholder="game contents" readOnly />
                                 <input type="text" name='inGameNickname' value={content.inGameNickname || ""} onChange={contentHandle} className="form-control text-center" id="floatingInput" placeholder="game id" />
                             </div>
                         </StCard>
                     </StDetailWrap>
                     <StBtnWrap>
                         <StDetailBtn className="btn mt-4" ><StyledLink to={"/list"}>이전으로</StyledLink></StDetailBtn>
-                        
-                        <StDetailBtn className="btn mt-4" onClick={()=>{joinHandler() }}>참가 신청</StDetailBtn>
-                        
-                        <StDetailBtn className="btn mt-4" onClick={()=>{deleteHandler() }}>참가 취소</StDetailBtn>
-                            
-                        
-                        
-                        {/* 조건에 따라서 함수도 취소로 */}
-                        
-                    
+                        <StDetailBtn className="btn mt-4" onClick={() => { joinHandler() }}>참가 신청</StDetailBtn>
+                        <StDetailBtn className="btn mt-4" onClick={() => { deleteHandler() }}>참가 취소</StDetailBtn>
                     </StBtnWrap>
                 </StDetailContainer>
             </StDetailPagelWrap>
         </Layout>
-    );
+    )
+
+
 };
+
+
 
 export default Detail;
 const StyledLink = styled(Link)`

@@ -1,22 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //---------------------현홍 시작------------------------------------------------------------------------------
 
-export const __getList = createAsyncThunk(
-    "contents/__getList",
-    async (payload, thunkAPI) => {
-        try {
-            const response = await axios.get(
-                `${process.env.REACT_APP_API_URL}/api/showpost/recruittrue`
-            );
-
-            return thunkAPI.fulfillWithValue(response.data.data);
-        } catch (e) {
-            return thunkAPI.rejectWithValue(e.code);
-        }
-    }
-);
 
 export const __getMyPost = createAsyncThunk(
     "contents/myPost",
@@ -68,10 +54,47 @@ export const __insertContent = createAsyncThunk(
             return thunkAPI.rejectWithValue(error);
         }
     }
-
 )
+
+export const __deleteContent = createAsyncThunk(
+    "contents/delete",
+    async (payload, thunkAPI) => {
+        try {
+            await axios.delete(
+                `${process.env.REACT_APP_API_URL}/api/gamepost/${payload}`,
+                {
+                    headers: {
+                        'Access_Token': `${localStorage.getItem("token")}`,
+                    },
+                }
+            ).then((response) => {
+                if (response.data.success) {
+                    //삭제 성공
+                    return thunkAPI.fulfillWithValue(payload);
+                }
+            })
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
 //----------------------현홍 끝-----------------------------------------------------------------------------
 
+
+export const __getList = createAsyncThunk(
+    "contents/__getList",
+    async (payload, thunkAPI) => {
+        try {
+            const response = await axios.get(
+                `${process.env.REACT_APP_API_URL}/api/showpost/recruittrue`
+            );
+
+            return thunkAPI.fulfillWithValue(response.data.data);
+        } catch (e) {
+            return thunkAPI.rejectWithValue(e.code);
+        }
+    }
+);
 
 export const __getListDone = createAsyncThunk(
     "contents/__getListDone",
@@ -115,18 +138,19 @@ export const ___Join = createAsyncThunk(
     "contents/Join",
     async (payload, thunkAPI) => {
         try {
-            await axios.put(
-                `${process.env.REACT_APP_API_URL}/api/gamepost/recruit/${payload.postId}`
-                , {
+            await axios.patch(
+                `${process.env.REACT_APP_API_URL}/api/gamepost/recruit/${payload.postId}`,
+                {
                     inGameNickname: payload.Nickname
-                }
-                , {
+                },
+                {
                     headers: {
+                        //'Content-Type': 'application/json',
                         'Access_Token': `${localStorage.getItem("token")}`,
                     },
                 }
             ).then((response) => {
-
+                console.log("리스폰스Join", response)
                 return thunkAPI.fulfillWithValue(response)
             })
         } catch (error) {
@@ -134,7 +158,6 @@ export const ___Join = createAsyncThunk(
         }
     }
 )
-
 
 
 
@@ -165,10 +188,11 @@ export const __getSearch = createAsyncThunk(
     "contents/__getSearch",
     async (payload, thunkAPI) => {
         try {
-            const response = await axios.get("http://localhost:3001/getSearch")
-                .then((response) => {
-                    return thunkAPI.fulfillWithValue(response)
-                })
+            await axios.get(
+                `${process.env.REACT_APP_API_URL}/api/showpost/search?gameName=${payload}`
+            ).then((response) => {
+                return thunkAPI.fulfillWithValue(response.data.data)
+            })
         } catch (e) {
             return thunkAPI.rejectWithValue(e.code);
         }
@@ -179,28 +203,7 @@ export const __getSearch = createAsyncThunk(
 
 
 
-export const __deleteContent = createAsyncThunk(
-    "contents/delete",
-    async (payload, thunkAPI) => {
-        try {
-            await axios.delete(
-                `${process.env.REACT_APP_API_URL}/api/gamepost/${payload}`,
-                {
-                    headers: {
-                        'Access_Token': `${localStorage.getItem("token")}`,
-                    },
-                }
-            ).then((response) => {
-                if (response.data.success) {
-                    //삭제 성공
-                    return thunkAPI.fulfillWithValue(payload);
-                }
-            })
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error);
-        }
-    }
-);
+
 
 
 
@@ -209,8 +212,8 @@ export const contentsSlice = createSlice({
     name: "contents",
     initialState: {
         contents: [],
-        myGamePostList: [],
-        myRecruitList: [],
+        myPost: [],
+        myRecruit: [],
         contentsDone: [],
         contentSearch: [],
         getDetailOne: [],
@@ -232,6 +235,13 @@ export const contentsSlice = createSlice({
                 state.myPost = response.data.data.myGamePostList;
                 state.myRecruit = response.data.data.myRecruitList;
             });
+        },
+        async searchPost(state, action) {
+            await axios.get(
+                `${process.env.REACT_APP_API_URL}/api/showpost/search?gameName=${action.payload}`
+            ).then((response) => {
+                state.contents = response.data.data
+            })
         }
     },
     extraReducers: {
@@ -297,8 +307,9 @@ export const contentsSlice = createSlice({
             state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
         },
         [__getSearch.fulfilled]: (state, action) => {
-            state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다. 
-            state.contentSearch = action.payload; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+            state.isLoading = false;
+            console.log("action.payload", action.payload)
+            state.contents = action.payload; //여기어때
         },
         [__getSearch.rejected]: (state, action) => {
             state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
@@ -346,5 +357,5 @@ export const contentsSlice = createSlice({
     }
 });
 
-export const { getMyPost } = contentsSlice.actions;
+export const { getMyPost, searchPost } = contentsSlice.actions;
 export default contentsSlice.reducer;

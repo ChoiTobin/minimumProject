@@ -43,7 +43,7 @@ export const __insertMember = createAsyncThunk(
 export const __userLogin = createAsyncThunk(
     "members/Login",
     async (payload, thunkAPI) => {
-    
+
         try {
             await axios.post(
                 `${process.env.REACT_APP_API_URL}/api/member/login`,
@@ -60,10 +60,8 @@ export const __userLogin = createAsyncThunk(
                         window.location.replace("List")
                         //localStorage.setItem("accesstokenexpiretime", response.headers.accesstokenexpiretime),
                     );
-                } else if (response.data.error.code == "MEMBER_NOT_FOUND") {
-                    alert("사용자를 찾을수 없습니다.")
-                } else if (response.data.error.code == 'WRONG_PASSWORD') {
-                    alert('비밀번호가 틀렸습니다.')
+                } else if (response.data.success === false) {
+                    alert(response.data.data.message);
                 }
                 return thunkAPI.fulfillWithValue(response.data);
             }
