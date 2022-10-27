@@ -6,13 +6,16 @@ import {__getDetailOne, __delete} from "../redux/modules/contents"
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import {___Join} from "../redux/modules/contents"
-
+import { useParams } from 'react-router-dom';
 
 
 const Detail = () => {
     const getDetail = useSelector((state) => state.contents)
     const getDetailDone = useSelector((state) => state)
     const dispatch = useDispatch();
+    const params = useParams()
+    console.log('hhahaha',params.id)
+
 
     const [content, setContent, contentHandle] = useInput({
         gamename: "",
@@ -42,6 +45,8 @@ const Detail = () => {
         //gamePostid도 던져줘야함.  
         );
     }
+    // console.log("값확인",getDetail.getDetailOne.gamePostId)
+    // console.log(getDetail)
 
     
     const deleteHandler = () =>{
@@ -56,10 +61,13 @@ const Detail = () => {
     }
 
 
-    
-
 
     return (
+
+
+        
+        getDetail.contents.filter(item => item.gamePostId == params.id).map(item =>
+
         <Layout>
             <StDetailPagelWrap>
                 <StDetailPage>상세페이지</StDetailPage>
@@ -67,34 +75,30 @@ const Detail = () => {
                     <StDetailWrap>
                         <StCard className="card" >
                             <div className='cardWrap'>
-                                <img src={getDetail.contents.imgUrl} className="card-img-top" alt="game image" />
+                                <img src={item.imgUrl} className="card-img-top" alt="game image" />
                             </div>
                             <div className="card-body cardWrap d-grid gap-2">
-                                <input type="text" name='gamename' value={`${getDetail.contents.gameName}`} className="form-control text-center" id="floatingInput" placeholder="game name" readOnly />
-                                <p>{`현재인원:${getDetail.contents.numberOfPeople}`}</p>
-                                <StDetailBody name='content' value={getDetail.contents.content} placeholder="game contents" readOnly />
+                                <input type="text" name='gamename' value={item.gameName} className="form-control text-center" id="floatingInput" placeholder="game name" readOnly />
+                                <p>{`모집인원:${item.numberOfPeople}`}</p>
+                                <StDetailBody name='content' value={item.content} placeholder="game contents" readOnly />
                                 <input type="text" name='inGameNickname' value={content.inGameNickname || ""} onChange={contentHandle} className="form-control text-center" id="floatingInput" placeholder="game id" />
                             </div>
                         </StCard>
                     </StDetailWrap>
                     <StBtnWrap>
                         <StDetailBtn className="btn mt-4" ><StyledLink to={"/list"}>이전으로</StyledLink></StDetailBtn>
-                        
                         <StDetailBtn className="btn mt-4" onClick={()=>{joinHandler() }}>참가 신청</StDetailBtn>
-                        
                         <StDetailBtn className="btn mt-4" onClick={()=>{deleteHandler() }}>참가 취소</StDetailBtn>
-                            
-                        
-                        
-                        {/* 조건에 따라서 함수도 취소로 */}
-                        
-                    
                     </StBtnWrap>
                 </StDetailContainer>
-            </StDetailPagelWrap>
+            </StDetailPagelWrap>    
         </Layout>
-    );
+        )
+    )
+    
 };
+
+
 
 export default Detail;
 const StyledLink = styled(Link)`
