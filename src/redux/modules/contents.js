@@ -151,10 +151,13 @@ export const ___Join = createAsyncThunk(
                 }
             ).then((response) => {
                 console.log("리스폰스Join", response)
-                return thunkAPI.fulfillWithValue(response)
+                if (response.data.success === false) {
+                    alert(response.data.data.message);
+                }
+                return thunkAPI.fulfillWithValue(response);
             })
         } catch (error) {
-            return thunkAPI.rejectWithValue(error)
+            return thunkAPI.rejectWithValue(error);
         }
     }
 )
@@ -188,17 +191,24 @@ export const __getSearch = createAsyncThunk(
     "contents/__getSearch",
     async (payload, thunkAPI) => {
         try {
-            await axios.get(
+            const response = await axios.get(
                 `${process.env.REACT_APP_API_URL}/api/showpost/search?gameName=${payload}`
-            ).then((response) => {
+            )
+            // .then((response) => {
+            //     console.log("thunk response", response)
+            //     return thunkAPI.fulfillWithValue(response.data.data)
+            // })
+
+            if (response.data.success) {
                 return thunkAPI.fulfillWithValue(response.data.data)
-            })
+            }
+
         } catch (e) {
             return thunkAPI.rejectWithValue(e.code);
         }
     }
 );
-//아직 안함. 검색창
+//아직 안함. 검색창 여기어때
 
 
 
@@ -236,6 +246,7 @@ export const contentsSlice = createSlice({
                 state.myRecruit = response.data.data.myRecruitList;
             });
         },
+
         async searchPost(state, action) {
             await axios.get(
                 `${process.env.REACT_APP_API_URL}/api/showpost/search?gameName=${action.payload}`
@@ -308,7 +319,6 @@ export const contentsSlice = createSlice({
         },
         [__getSearch.fulfilled]: (state, action) => {
             state.isLoading = false;
-            console.log("action.payload", action.payload)
             state.contents = action.payload; //여기어때
         },
         [__getSearch.rejected]: (state, action) => {

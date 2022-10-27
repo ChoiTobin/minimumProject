@@ -30,8 +30,8 @@ const List = () => {
     let [done, setDone] = useState(true)
 
     const onSearchHandler = () => {
-        dispatch(searchPost(search.gameName));
-        //dispatch(__getSearch(search.gameName));
+        //dispatch(searchPost(search.gameName));
+        dispatch(__getSearch(search.gameName));
     };
     //여긴 아직안함
 
@@ -54,8 +54,6 @@ const List = () => {
     }
 
     //console.log("어떻게뜰까?",list2,listDone)
-
-
 
     return (
         <Layout>
