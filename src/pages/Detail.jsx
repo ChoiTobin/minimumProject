@@ -82,7 +82,7 @@ const Detail = () => {
                     <StBtnWrap>
                         <StDetailBtn className="btn mt-4" ><StyledLink to={"/list"}>이전으로</StyledLink></StDetailBtn>
                         <StDetailBtn className="btn mt-4" onClick={() => { joinHandler() }}>참가 신청</StDetailBtn>
-                        <StDetailBtn className="btn mt-4" onClick={() => { deleteHandler() }}>참가 취소</StDetailBtn>
+                        {/* <StDetailBtn className="btn mt-4" onClick={() => { deleteHandler() }}>참가 취소</StDetailBtn> */}
                     </StBtnWrap>
                 </StDetailContainer>
             </StDetailPagelWrap>
