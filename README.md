@@ -24,4 +24,4 @@ HTML / CSS in JS / JavaScript / React / Redux / Redux Toolkit / git / gitHub / V
 - 마이페이지 작성글(현홍)
 
 
-프로젝트 영상:https://www.youtube.com/watch?v=qKTtUOtMw1A
+- 프로젝트 영상:https://www.youtube.com/watch?v=qKTtUOtMw1A
