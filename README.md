@@ -23,3 +23,4 @@ HTML / CSS in JS / JavaScript / React / Redux / Redux Toolkit / git / gitHub / V
 - 이미지업로드(현홍) 
 - 마이페이지 작성글(현홍)
 
+https://www.youtube.com/watch?v=qKTtUOtMw1A
